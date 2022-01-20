@@ -1,0 +1,10 @@
+menuconfig LIBOMNIORB
+	bool "OmniORB"
+	default n
+	depends on ARCH_X86_64
+	select LIBCXX
+	select LIBLWIP
+	select LIBPTHREAD_EMBEDDED
+	select LIBOPENSSL
+	select LIBC
+

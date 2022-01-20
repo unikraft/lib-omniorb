@@ -1,0 +1,284 @@
+#  SPDX-License-Identifier: BSD-3-Clause
+#
+#  omniORB glue Makefile.uk
+#
+#  Authors: Vlad-Andrei Badoiu <vlad_andrei.badoiu@upb.ro>
+#
+#  Copyright (c) 2021, University Politehnica of Bucharest. All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#  3. Neither the name of the copyright holder nor the names of its
+#     contributors may be used to endorse or promote products derived from
+#     this software without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+#  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#  POSSIBILITY OF SUCH DAMAGE.
+#
+
+################################################################################
+# Library registration
+################################################################################
+$(eval $(call addlib_s,libomniorb,$(CONFIG_LIBOMNIORB)))
+
+################################################################################
+# Original sources
+################################################################################
+LIBOMNIORB_URL=https://sourceforge.net/projects/omniorb/files/omniORB/omniORB-4.2.4/omniORB-4.2.4.tar.bz2
+$(eval $(call fetch,libomniorb,$(LIBOMNIORB_URL)))
+
+################################################################################
+# Helpers
+################################################################################
+LIBOMNIORB_EXTRACTED = $(LIBOMNIORB_ORIGIN)/omniORB-4.2.4
+
+################################################################################
+# Library includes
+################################################################################
+LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_BASE)/include
+LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_EXTRACTED)/include
+LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/
+LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_EXTRACTED)/include/omniORB4/internal
+LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/
+CINCLUDES-$(CONFIG_LIBOMNIORB)   += $(LIBOMNIORB_GLOBAL_INCLUDES-y)
+CXXINCLUDES-$(CONFIG_LIBOMNIORB) += $(LIBOMNIORB_GLOBAL_INCLUDES-y)
+
+LIBOMNIORB_CFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10
+LIBOMNIORB_CXXFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10
+
+
+################################################################################
+# Global flags
+################################################################################
+
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/policy.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaBoa.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/msvcdllstub.cc|core
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniIdentity.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopRendezvouser.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniPolicy.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/callDescriptor.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopBiDir.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/shutdownIdentity.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/logIOstream.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/poamanager.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/GIOP_C.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tracedthread.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cs-UTF-8.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopStrand.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniInternal.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/GIOP_S.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaFixed.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopRope.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopEndpoint.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cdrMemoryStream.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ior.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/invoker.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaOrb.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/callHandle.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/orbOptions.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopImpl11.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/poastubs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopServer.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniIOR.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/rmutex.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/interceptors.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopWorker.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/orbOptionsReg.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/libcWrapper.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopStreamImpl.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/current.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopImpl12.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/bootstrapstub.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/orbOptionsFile.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopStream.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/remoteIdentity.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/exception.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/anonObject.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/transportRules.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/proxyFactory.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/portableserver.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaWString.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniORB.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniTransport.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopMonitor.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniServant.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/omniObjRef.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/objectAdapter.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/inProcessIdentity.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaString.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/exceptn.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcp/tcpTransportImpl.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcp/tcpActive.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcp/tcpConnection.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcp/tcpEndpoint.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcp/tcpAddress.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cdrStreamAdapter.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/dynamicLib.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/poa.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cs-UTF-16.cc
+# TODO: Add config option in the future
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslContext.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslTransportImpl.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslEndpoint.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslActive.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslConnection.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/ssl/sslAddress.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/localIdentity.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cdrValueChunkStream.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/constants.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cs-16bit.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/tcpSocket.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/SocketCollection.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/objectStub.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cs-8bit.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/localObject.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cs-8859-1.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/Namingstub.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/codeSets.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/uri.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/unix/unixTransportImpl.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/unix/unixEndpoint.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/unix/unixAddress.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/unix/unixConnection.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/unix/unixActive.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/cdrStream.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/corbaObject.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/initRefs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/giopImpl10.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/orbcore/minorCode.cc
+
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/policy.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/serverRequest.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/request.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/boxes.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/environment.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/irstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/bootstrapdynstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/Namingdynstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/dynException.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/irdynstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/typecode.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/orbMultiRequest.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/abstractBase.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/poastub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/valueTracker.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/valueFactory.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/nvList.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/unknownUserExn.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/any.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/pseudoBase.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/messagingstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/dynAnyNil.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/unknownValue.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/dynamicLib.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/context.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/corbaidldynstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/omniTypedefs.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/constants.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/exceptionList.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/corbaidlstub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/dynamicImplementation.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/valueType.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/dynAny.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/contextList.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/valueBase.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/pollablestub.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/tcParser.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/anyStream.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/ami.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/namedValue.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/dynamic/ir.cc|dynamic
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/connections/dataStub.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/connections/omniConnectionMgmt.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-500.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1258.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/omniCodeSets.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-4.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1255.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-7.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1254.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-5.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-11.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-3.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-14.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-GBK.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-15.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1252.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1253.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-10.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-2.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-9.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-UCS-4.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1251.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1256.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-16.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1257.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-8.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-cp1250.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-EDF-4.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-6.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-037.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-13.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/threaddata.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/posix.cc
+# TODO: Add config option in the future
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlutil.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlast.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idltype.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlscope.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlerr.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idldump.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlexpr.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlfixed.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/lex.yy.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlvalidate.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlconfig.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlrepoId.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/alloca.c
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/index.c
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/cexp.c
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/cccp.c
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/config.c
+# Not used, left just in case
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/nt.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/vxWorks.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniMapper/omniMapper.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/utils/genior/genior.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/utils/convertior/convertior.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/utils/catior/catior.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/utils/nameclt/nameclt.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/omniNamesWin.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/omniNames.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/NamingContext_i.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/log.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlpython.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlc.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/omniZIOPDynamic.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/ziopDynStubs.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/compressionDynStubs.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/messagingStubs.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/ziopStubs.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/zlibCompressor.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/omniZIOP.cc
+
+$(LIBOMNIORB_BUILD)/.prepared: $(APP_BASE)/.config
+	cd $(LIBOMNIORB_EXTRACTED) && ./configure && touch $@
+
+UK_PREPARE += $(LIBOMNIORB_BUILD)/.prepared
