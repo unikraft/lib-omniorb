@@ -41,7 +41,9 @@ $(eval $(call addlib_s,libomniorb,$(CONFIG_LIBOMNIORB)))
 # Original sources
 ################################################################################
 LIBOMNIORB_URL=https://sourceforge.net/projects/omniorb/files/omniORB/omniORB-4.2.4/omniORB-4.2.4.tar.bz2
+LIBOMNIORB_PATCHDIR=$(LIBOMNIORB_BASE)/patches
 $(eval $(call fetch,libomniorb,$(LIBOMNIORB_URL)))
+$(eval $(call patch,libomniorb,$(LIBOMNIORB_PATCHDIR),omniORB-4.2.4))
 
 ################################################################################
 # Helpers
@@ -270,13 +272,13 @@ LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/posix.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/log.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlpython.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlc.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/omniZIOPDynamic.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/ziopDynStubs.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/compressionDynStubs.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/messagingStubs.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/ziopStubs.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/zlibCompressor.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/omniZIOP.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/omniZIOPDynamic.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/ziopDynStubs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/compressionDynStubs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/messagingStubs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/ziopStubs.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/zlibCompressor.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/omniZIOP.cc
 
 $(LIBOMNIORB_BUILD)/.prepared: $(APP_BASE)/.config
 	cd $(LIBOMNIORB_EXTRACTED) && ./configure && touch $@

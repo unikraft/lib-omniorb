@@ -1,0 +1,68 @@
+From 115ec2690268a0d3c117374fea884e6ec76d955f Mon Sep 17 00:00:00 2001
+From: Vlad Badoiu <vlad_andrei.badoiu@upb.ro>
+Date: Thu, 3 Feb 2022 09:22:36 +0200
+Subject: [PATCH 1/1] Fix conflix with Python on context.h
+
+Signed-off-by: Vlad Badoiu <vlad_andrei.badoiu@upb.ro>
+---
+ src/lib/omniORB/dynamic/context.cc       | 2 +-
+ src/lib/omniORB/dynamic/dynamicLib.cc    | 2 +-
+ src/lib/omniORB/dynamic/request.cc       | 2 +-
+ src/lib/omniORB/dynamic/serverRequest.cc | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/lib/omniORB/dynamic/context.cc b/src/lib/omniORB/dynamic/context.cc
+index 9cacb94..889b4f3 100644
+--- a/src/lib/omniORB/dynamic/context.cc
++++ b/src/lib/omniORB/dynamic/context.cc
+@@ -33,7 +33,7 @@
+ #pragma hdrstop
+ #endif
+ 
+-#include <context.h>
++#include <omniORB4/internal/context.h>
+ #include <pseudo.h>
+ #include <exceptiondefs.h>
+ 
+diff --git a/src/lib/omniORB/dynamic/dynamicLib.cc b/src/lib/omniORB/dynamic/dynamicLib.cc
+index 2b715c8..ad83ade 100644
+--- a/src/lib/omniORB/dynamic/dynamicLib.cc
++++ b/src/lib/omniORB/dynamic/dynamicLib.cc
+@@ -30,7 +30,7 @@
+ #include <omniORB4/CORBA.h>
+ #include <omniORB4/callDescriptor.h>
+ #include <dynamicLib.h>
+-#include <context.h>
++#include <omniORB4/internal/context.h>
+ #include <initialiser.h>
+ #include <omniORB4/linkHacks.h>
+ 
+diff --git a/src/lib/omniORB/dynamic/request.cc b/src/lib/omniORB/dynamic/request.cc
+index b51796b..532a9a5 100644
+--- a/src/lib/omniORB/dynamic/request.cc
++++ b/src/lib/omniORB/dynamic/request.cc
+@@ -35,7 +35,7 @@
+ #endif
+ 
+ #include <request.h>
+-#include <context.h>
++#include <omniORB4/internal/context.h>
+ #include <string.h>
+ #include <omniORB4/callDescriptor.h>
+ #include <remoteIdentity.h>
+diff --git a/src/lib/omniORB/dynamic/serverRequest.cc b/src/lib/omniORB/dynamic/serverRequest.cc
+index 44a3512..b514254 100644
+--- a/src/lib/omniORB/dynamic/serverRequest.cc
++++ b/src/lib/omniORB/dynamic/serverRequest.cc
+@@ -32,7 +32,7 @@
+ #include <omniORB4/IOP_S.h>
+ #include <dynamicImplementation.h>
+ #include <pseudo.h>
+-#include <context.h>
++#include <omniORB4/internal/context.h>
+ #include <exceptiondefs.h>
+ #include <poacurrentimpl.h>
+ 
+-- 
+2.25.1
+
