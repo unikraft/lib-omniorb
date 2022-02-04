@@ -61,8 +61,8 @@ LIBOMNIORB_GLOBAL_INCLUDES-y     += -I$(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/c
 CINCLUDES-$(CONFIG_LIBOMNIORB)   += $(LIBOMNIORB_GLOBAL_INCLUDES-y)
 CXXINCLUDES-$(CONFIG_LIBOMNIORB) += $(LIBOMNIORB_GLOBAL_INCLUDES-y)
 
-LIBOMNIORB_CFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10
-LIBOMNIORB_CXXFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10
+LIBOMNIORB_CFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10 -DPYTHON_INCLUDE="<Python.h>" -DIDLMODULE_VERSION=0x2630 -fpermissive
+LIBOMNIORB_CXXFLAGS-y += -D_REENTRANT -DUSE_omniORB_logStream -D_OMNIORB_LIBRARY -DOMNIORB_VERSION_STRING='"4.2.4"' -DOMNIORB_VERSION_HEX='0x040204F1' -DCONFIG_DEFAULT_LOCATION='"/etc/omniORB.cfg"' -DCONFIG_ENV='"OMNIORB_CONFIG"' -DUnixArchitecture -D__OSVERSION__=2 -D__linux__ -D__x86_64__ -DPthreadDraftVersion=10 -DPYTHON_INCLUDE="<Python.h>" -DIDLMODULE_VERSION=0x2630 -fpermissive
 
 
 ################################################################################
@@ -241,23 +241,24 @@ LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/codesets/cs-8859-13
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/threaddata.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/posix.cc
 # TODO: Add config option in the future
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlutil.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlast.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idltype.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlscope.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlerr.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idldump.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlexpr.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlfixed.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/lex.yy.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlvalidate.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlconfig.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlrepoId.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlutil.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlast.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idltype.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlscope.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlerr.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idldump.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlexpr.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlfixed.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/lex.yy.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlvalidate.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlconfig.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlrepoId.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/alloca.c
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/index.c
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/cexp.c
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/cccp.c
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/config.c
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/y.tab.cc
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/cccp/config.c
 # Not used, left just in case
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/nt.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/vxWorks.cc
@@ -270,8 +271,6 @@ LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omnithread/posix.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/omniNames.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/NamingContext_i.cc
 #LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/appl/omniNames/log.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlpython.cc
-#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlc.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/omniZIOPDynamic.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/ziopDynStubs.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziopdynamic/compressionDynStubs.cc
@@ -279,7 +278,8 @@ LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/messagingStubs
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/ziopStubs.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/zlibCompressor.cc
 LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/lib/omniORB/ziop/omniZIOP.cc
-
+LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlpython.cc
+#LIBOMNIORB_SRCS-y += $(LIBOMNIORB_EXTRACTED)/src/tool/omniidl/cxx/idlc.cc
 $(LIBOMNIORB_BUILD)/.prepared: $(APP_BASE)/.config
 	cd $(LIBOMNIORB_EXTRACTED) && ./configure && touch $@
 
