@@ -1,0 +1,26 @@
+From 8ee81e5b420dd79acdc5e0266152fbb9bf1c127f Mon Sep 17 00:00:00 2001
+From: Vlad Badoiu <vlad_andrei.badoiu@upb.ro>
+Date: Sun, 6 Feb 2022 11:34:26 +0200
+Subject: [PATCH 1/1] Fix pthread conversion using pthread_to_unsigned_long
+
+Signed-off-by: Vlad Badoiu <vlad_andrei.badoiu@upb.ro>
+---
+ src/lib/omniORB/orbcore/ssl/sslContext.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/lib/omniORB/orbcore/ssl/sslContext.cc b/src/lib/omniORB/orbcore/ssl/sslContext.cc
+index e97b088..ae2a5d2 100644
+--- a/src/lib/omniORB/orbcore/ssl/sslContext.cc
++++ b/src/lib/omniORB/orbcore/ssl/sslContext.cc
+@@ -388,7 +388,7 @@ void sslContext_locking_callback(int mode, int type, const char *,int) {
+ #ifndef __WIN32__
+ extern "C"
+ unsigned long sslContext_thread_id(void) {
+-  unsigned long id = (unsigned long)pthread_self();
++  unsigned long id = (unsigned long)pthread_to_unsigned_long(&pthread_self());
+   return id;
+ }
+ #endif
+-- 
+2.25.1
+
